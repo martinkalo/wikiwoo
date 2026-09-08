@@ -113,8 +113,26 @@
                 valueGetter: (params) => (params.data.categories || []).join(', '),
             },
             { field: 'address', filter: 'agTextColumnFilter' },
-            { field: 'website', filter: 'agTextColumnFilter' },
-            { field: 'comment', filter: 'agTextColumnFilter' },
+            {
+                field: 'website',
+                filter: 'agTextColumnFilter',
+                cellRenderer: (params) => {
+                    if (!params.value) return '';
+
+                    const a = document.createElement('a');
+                    a.href = params.value;
+                    a.textContent = params.value;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+
+                    return a;
+                }
+            },
+            {
+                field: 'comment',
+                filter: 'agTextColumnFilter',
+                flex: 1,
+            },
         ];
 
 
@@ -169,7 +187,8 @@
 
                     // API already returns { id, name, address, website, categories: [...] }
                     api.setGridOption('rowData', data);
-                    api.autoSizeAllColumns();
+                    api.autoSizeColumns(['name', 'categories', 'address', 'website']);
+
                 })
                 .catch((err) => {
                     console.error('Failed to load data:', err);
