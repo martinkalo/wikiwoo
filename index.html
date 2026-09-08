@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Locations</title>
-    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.4/dist/ag-grid-community.min.js"></script>
+    <title>wikiwoo</title>
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@33/dist/ag-grid-community.min.js"></script>
 </head>
 <body>
     <style>
@@ -11,8 +11,8 @@
             width: 100%;
         }
     </style>
-    <h1>Locations</h1>
-    <div id="data-table" class="ag-theme-balham"></div>
+    <center><h1>wikiwoo</h1></center>
+    <div id="data-table"></div>
 
     <script type="text/javascript" charset="utf-8">
         const API_URL = 'https://directory-api.wikiwoo.workers.dev/locations';
@@ -33,7 +33,6 @@
                 this.checkboxes = {};
 
                 const hint = document.createElement('div');
-                hint.textContent = 'Must match all selected';
                 hint.style.fontSize = '11px';
                 hint.style.color = '#888';
                 hint.style.marginBottom = '6px';
@@ -110,7 +109,32 @@
             { field: 'website', filter: 'agTextColumnFilter' },
         ];
 
+        const myTheme = agGrid.themeQuartz.withParams({
+            accentColor: "#FDFF00",
+            backgroundColor: "#1C1600",
+            borderColor: "#00E5FF4D",
+            browserColorScheme: "dark",
+            chromeBackgroundColor: {
+                ref: "foregroundColor",
+                mix: 0.07,
+                onto: "backgroundColor"
+            },
+            fontFamily: {
+                googleFont: "Inclusive Sans"
+            },
+            fontSize: 14,
+            foregroundColor: "#FFFFFF",
+            headerBackgroundColor: "#696016",
+            headerFontFamily: {
+                googleFont: "Inclusive Sans"
+            },
+            headerFontSize: 16,
+            headerFontWeight: 800,
+            headerTextColor: "#FFFFFF"
+        });
+
         const gridOptions = {
+            theme: myTheme,
             defaultColDef: {
                 sortable: true,
                 filter: 'agTextColumnFilter',
