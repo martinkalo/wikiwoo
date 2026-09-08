@@ -124,12 +124,22 @@
         const eGridDiv = document.getElementById('data-table');
         const gridApi = agGrid.createGrid(eGridDiv, gridOptions);
 
+        // Keep track of the last data we rendered so we only touch the grid
+        // when something actually changed (avoids unnecessary re-renders/
+        // scroll jumps every poll).
+        let lastDataJson = null;
+
         renderDataInTheTable(gridApi);
+        setInterval(() => renderDataInTheTable(gridApi), 8000); // poll every 8s
 
         function renderDataInTheTable(api) {
             fetch(API_URL)
                 .then((response) => response.json())
                 .then((data) => {
+                    const dataJson = JSON.stringify(data);
+                    if (dataJson === lastDataJson) return; // nothing changed
+                    lastDataJson = dataJson;
+
                     // API already returns { id, name, address, website, categories: [...] }
                     api.setGridOption('rowData', data);
                     api.sizeColumnsToFit();
