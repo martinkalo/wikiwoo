@@ -2,9 +2,7 @@
 <html>
 <head>
     <title>Locations</title>
-    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.3.4/dist/ag-grid-community.min.js"></script>
 </head>
 <body>
     <style>
@@ -17,9 +15,7 @@
     <div id="data-table" class="ag-theme-balham"></div>
 
     <script type="text/javascript" charset="utf-8">
-        // Point this at your deployed Worker, e.g.
-        // 'https://directory-api.<your-subdomain>.workers.dev/locations'
-        const API_URL = 'http://localhost:8787/locations';
+        const API_URL = 'https://directory-api.wikiwoo.workers.dev/locations';
 
         const columnDefs = [
             { field: 'name', filter: 'agTextColumnFilter' },
@@ -43,18 +39,20 @@
             },
             pagination: true,
             columnDefs: columnDefs,
-            onGridReady: (event) => { renderDataInTheTable(event.api); }
+            rowData: [],
         };
 
         const eGridDiv = document.getElementById('data-table');
-        new Grid(eGridDiv, gridOptions);
+        const gridApi = agGrid.createGrid(eGridDiv, gridOptions);
+
+        renderDataInTheTable(gridApi);
 
         function renderDataInTheTable(api) {
-            fetch("https://directory-api.wikiwoo.workers.dev")
+            fetch(API_URL)
                 .then((response) => response.json())
                 .then((data) => {
                     // API already returns { id, name, address, website, categories: [...] }
-                    api.setRowData(data);
+                    api.setGridOption('rowData', data);
                     api.sizeColumnsToFit();
                 })
                 .catch((err) => {
