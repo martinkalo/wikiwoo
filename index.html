@@ -6,6 +6,9 @@
 </head>
 <body>
     <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
         #data-table {
             height: 500px;
             width: 100%;
@@ -109,28 +112,24 @@
             { field: 'website', filter: 'agTextColumnFilter' },
         ];
 
+        // Plain, no-frills look — default system font, square corners,
+        // thin gray borders, white background. No custom brand color.
         const myTheme = agGrid.themeQuartz.withParams({
-            accentColor: "#FDFF00",
-            backgroundColor: "#1C1600",
-            borderColor: "#00E5FF4D",
-            browserColorScheme: "dark",
-            chromeBackgroundColor: {
-                ref: "foregroundColor",
-                mix: 0.07,
-                onto: "backgroundColor"
-            },
-            fontFamily: {
-                googleFont: "Inclusive Sans"
-            },
-            fontSize: 14,
-            foregroundColor: "#FFFFFF",
-            headerBackgroundColor: "#696016",
-            headerFontFamily: {
-                googleFont: "Inclusive Sans"
-            },
-            headerFontSize: 16,
-            headerFontWeight: 800,
-            headerTextColor: "#FFFFFF"
+            accentColor: "#0000EE",
+            backgroundColor: "#FFFFFF",
+            foregroundColor: "#000000",
+            borderColor: "#999999",
+            borderRadius: 0,
+            wrapperBorderRadius: 0,
+            fontFamily: "Arial, Helvetica, sans-serif",
+            headerFontFamily: "Arial, Helvetica, sans-serif",
+            fontSize: 13,
+            headerFontSize: 13,
+            headerFontWeight: "normal",
+            headerBackgroundColor: "#EEEEEE",
+            headerTextColor: "#000000",
+            rowHoverColor: "#F0F0F0",
+            spacing: 6,
         });
 
         const gridOptions = {
