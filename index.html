@@ -99,8 +99,8 @@
                 // categories arrives as an array (e.g. ["Food/Drink", "Music"]) — join for display
                 valueFormatter: (params) => (params.value || []).join(', '),
             },
-            { field: 'address', filter: 'agTextColumnFilter' },
-            { field: 'website', filter: 'agTextColumnFilter' },
+            { field: 'address' },
+            { field: 'website' },
         ];
 
         const gridOptions = {
