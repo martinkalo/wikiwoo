@@ -32,6 +32,13 @@
                 this.eGui.style.minWidth = '160px';
                 this.checkboxes = {};
 
+                const hint = document.createElement('div');
+                hint.textContent = 'Must match all selected';
+                hint.style.fontSize = '11px';
+                hint.style.color = '#888';
+                hint.style.marginBottom = '6px';
+                this.eGui.appendChild(hint);
+
                 // Collect every unique category currently in the grid's data
                 const allCategories = new Set();
                 params.api.forEachNode((node) => {
@@ -71,7 +78,7 @@
             doesFilterPass(params) {
                 if (this.selected.size === 0) return true;
                 const rowCategories = params.data.categories || [];
-                return rowCategories.some((c) => this.selected.has(c));
+                return [...this.selected].every((c) => rowCategories.includes(c));
             }
 
             isFilterActive() {
@@ -99,8 +106,8 @@
                 // categories arrives as an array (e.g. ["Food/Drink", "Music"]) — join for display
                 valueFormatter: (params) => (params.value || []).join(', '),
             },
-            { field: 'address' },
-            { field: 'website' },
+            { field: 'address', filter: 'agTextColumnFilter' },
+            { field: 'website', filter: 'agTextColumnFilter' },
         ];
 
         const gridOptions = {
